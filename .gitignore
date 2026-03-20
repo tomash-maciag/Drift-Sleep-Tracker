@@ -1,0 +1,14 @@
+# Temporary
+scratch/
+
+# Planning artifacts
+.planning/
+projects/
+tests/
+
+# Python
+__pycache__/
+*.pyc
+
+# Claude settings
+.claude/
