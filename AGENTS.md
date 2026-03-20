@@ -2,7 +2,7 @@
 
 ## Project Identity
 
-**Project:** Sleep Tracker
+**Project:** Drift
 **Purpose:** Application for tracking and logging sleep data
 
 ## Workflow

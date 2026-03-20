@@ -4,7 +4,10 @@ scratch/
 # Planning artifacts
 .planning/
 projects/
-tests/
+
+# Node
+node_modules/
+dist/
 
 # Python
 __pycache__/
