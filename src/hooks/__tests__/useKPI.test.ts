@@ -9,7 +9,7 @@ beforeEach(async () => {
   await db.open()
 })
 
-const makeLog = (date: string, wakeTime: string, quality: number) => ({
+const makeLog = (_date: string, wakeTime: string, quality: number) => ({
   bedtime: '23:00', sleepOnset: '23:15', wakeTime, outOfBedTime: wakeTime,
   alarmWake: false, sleepQuality: quality, grogginess: 3, wakeUpMinutes: 15, awakenings: 0,
   lightTherapyStart: null, lightTherapyEnd: null, lightTherapyIntensity: null,

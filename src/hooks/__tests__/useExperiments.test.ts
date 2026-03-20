@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 import 'fake-indexeddb/auto'
 import { db } from '../../db'
 import { createSleepLog } from '../useSleepLogs'
-import { createExperiment, getActiveExperiment, archiveExperiment, computeExperimentComparison } from '../useExperiments'
+import { createExperiment, archiveExperiment, computeExperimentComparison } from '../useExperiments'
 
 beforeEach(async () => {
   await db.delete()
