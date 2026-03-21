@@ -25,6 +25,21 @@ export function formatMinutesAsHM(minutes: number): string {
   return `${h}h ${m}m`
 }
 
+function roundTo5(n: number): number {
+  return Math.round(n / 5) * 5
+}
+
+export function formatMinutesAsHMRounded(minutes: number): string {
+  const rounded = roundTo5(minutes)
+  const h = Math.floor(rounded / 60)
+  const m = rounded % 60
+  return `${h}h ${String(m).padStart(2, '0')}m`
+}
+
+export function minutesToTimeRounded(minutes: number): string {
+  return minutesToTime(roundTo5(minutes))
+}
+
 export function isSunday(date: string): boolean {
   return new Date(date + 'T12:00:00').getDay() === 0
 }
