@@ -3,10 +3,7 @@ import { Layout } from "./components/Layout"
 import { Dashboard } from "./views/Dashboard"
 import { Settings } from "./views/Settings"
 import { LogForm } from "./views/LogForm"
-
-function ExperimentsPlaceholder() {
-  return <div className="text-tertiary">Experiments</div>
-}
+import { Experiments } from "./views/Experiments"
 
 export default function App() {
   return (
@@ -15,7 +12,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route index element={<Dashboard />} />
           <Route path="log" element={<LogForm />} />
-          <Route path="experiments" element={<ExperimentsPlaceholder />} />
+          <Route path="experiments" element={<Experiments />} />
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
