@@ -1,9 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router"
 import { Layout } from "./components/Layout"
-
-function DashboardPlaceholder() {
-  return <div className="text-tertiary">Dashboard</div>
-}
+import { Dashboard } from "./views/Dashboard"
 
 function LogPlaceholder() {
   return <div className="text-tertiary">Log Form</div>
@@ -22,7 +19,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route index element={<DashboardPlaceholder />} />
+          <Route index element={<Dashboard />} />
           <Route path="log" element={<LogPlaceholder />} />
           <Route path="experiments" element={<ExperimentsPlaceholder />} />
           <Route path="settings" element={<SettingsPlaceholder />} />
