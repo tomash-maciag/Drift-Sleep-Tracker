@@ -15,14 +15,16 @@ export function StepperField({ label, value, onChange, min, max, unit, step = 5 
       <div className="flex items-center gap-3">
         <button
           onClick={() => onChange(Math.max(min, value - step))}
-          className="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant"
+          aria-label={`Decrease ${label}`}
+          className="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant"
         >
           <span className="material-symbols-outlined text-lg">remove</span>
         </button>
         <span className="font-headline text-lg font-extralight text-tertiary w-12 text-center">{value}{unit}</span>
         <button
           onClick={() => onChange(Math.min(max, value + step))}
-          className="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant"
+          aria-label={`Increase ${label}`}
+          className="w-11 h-11 rounded-lg bg-surface-container-low flex items-center justify-center text-on-surface-variant"
         >
           <span className="material-symbols-outlined text-lg">add</span>
         </button>

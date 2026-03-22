@@ -15,7 +15,7 @@ import { todayDate, isSunday } from '../utils/date'
 
 export function LogForm() {
   const navigate = useNavigate()
-  const [date] = useState(todayDate())
+  const [date, setDate] = useState(todayDate())
 
   // Check for existing log on this date
   const existingLog = useTodayLog(date)
@@ -157,13 +157,16 @@ export function LogForm() {
     <>
       {/* Sub-header */}
       <div className="flex items-center justify-between mb-6">
-        <button className="text-on-surface-variant" onClick={() => navigate('/')}>
+        <button className="w-11 h-11 flex items-center justify-center text-on-surface-variant" aria-label="Close" onClick={() => navigate('/')}>
           <span className="material-symbols-outlined">close</span>
         </button>
         <h2 className="font-headline text-lg font-semibold tracking-tight text-tertiary">Log Sleep</h2>
-        <span className="font-label text-[10px] uppercase tracking-[0.15em] text-primary bg-surface-container-highest px-3 py-1.5 rounded-lg">
-          {date === todayDate() ? 'Today' : date}
-        </span>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="font-label text-[10px] uppercase tracking-[0.15em] text-primary bg-surface-container-highest px-3 py-1.5 rounded-lg border-none outline-none cursor-pointer"
+        />
       </div>
 
       <div className="space-y-6">

@@ -17,7 +17,7 @@ export function LastNight() {
           <span className="font-headline text-lg font-light text-tertiary">Log today's sleep</span>
           <p className="font-label text-[10px] text-on-surface-variant mt-1 uppercase tracking-[0.15em]">Tap to record last night</p>
         </div>
-        <button onClick={() => navigate('/log')} className="bg-primary text-on-primary w-10 h-10 rounded-xl flex items-center justify-center">
+        <button onClick={() => navigate('/log')} aria-label="Log sleep" className="bg-primary text-on-primary w-11 h-11 rounded-xl flex items-center justify-center">
           <span className="material-symbols-outlined text-xl">add</span>
         </button>
       </section>

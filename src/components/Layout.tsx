@@ -13,6 +13,7 @@ export function Layout() {
       {/* FAB */}
       <button
         className="fixed bottom-24 right-6 bg-primary text-on-primary h-14 w-14 rounded-2xl shadow-[0_0_32px_0_rgba(217,102,52,0.3)] flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-40"
+        aria-label="Log sleep"
         onClick={() => navigate('/log')}
       >
         <span className="material-symbols-outlined">add</span>
