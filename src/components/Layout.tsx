@@ -5,7 +5,7 @@ import { BottomNav } from "./BottomNav"
 export function Layout() {
   const navigate = useNavigate()
   return (
-    <div className="bg-surface text-on-surface font-body min-h-screen pb-32 max-w-[400px] mx-auto selection:bg-primary-container selection:text-primary">
+    <div className="bg-surface text-on-surface font-body min-h-screen pb-32 selection:bg-primary-container selection:text-primary">
       <AppBar />
       <main className="pt-20 px-6 space-y-6">
         <Outlet />
