@@ -10,7 +10,7 @@ import { SleepBar } from '../components/SleepBar/SleepBar'
 import { MedicationPanel } from '../components/MedicationPanel'
 import { WeeklyReview } from '../components/WeeklyReview'
 import { ExperimentPicker } from '../components/ExperimentPicker'
-import { todayDate, isSunday } from '../utils/date'
+import { todayDate, isSunday, timeToMinutes, minutesToTime } from '../utils/date'
 
 export function LogForm() {
   const navigate = useNavigate()
@@ -24,11 +24,27 @@ export function LogForm() {
   const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '00:00')
   const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '08:00')
 
-  // Sleep bar state
-  const [bedtime, setBedtime] = useState('23:00')
-  const [sleepOnset, setSleepOnset] = useState('23:15')
-  const [wakeTime, setWakeTime] = useState('06:30')
-  const [outOfBedTime, setOutOfBedTime] = useState('07:00')
+  // Sleep window defaults from settings
+  const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '23:00')
+  const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '07:00')
+
+  // Sleep bar state — defaults from sleep window settings
+  const [bedtime, setBedtime] = useState('')
+  const [sleepOnset, setSleepOnset] = useState('')
+  const [wakeTime, setWakeTime] = useState('')
+  const [outOfBedTime, setOutOfBedTime] = useState('')
+
+  // Apply sleep window defaults for new entries
+  useEffect(() => {
+    if (!existingLog && sleepWindowStart && sleepWindowEnd) {
+      setBedtime((prev) => prev || sleepWindowStart)
+      const onsetMin = (timeToMinutes(sleepWindowStart) + 15) % 1440
+      setSleepOnset((prev) => prev || minutesToTime(onsetMin))
+      setWakeTime((prev) => prev || sleepWindowEnd)
+      const outMin = (timeToMinutes(sleepWindowEnd) + 15) % 1440
+      setOutOfBedTime((prev) => prev || minutesToTime(outMin))
+    }
+  }, [existingLog, sleepWindowStart, sleepWindowEnd])
 
   // Core fields
   const [alarmWake, setAlarmWake] = useState(0) // 0=Spontaneous, 1=Alarm
