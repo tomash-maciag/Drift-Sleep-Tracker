@@ -51,7 +51,7 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
   }, [bedtime, sleepOnset, wakeTime, outOfBedTime, rangeStartMin, rangeTotalMin])
 
   // Compute hour labels and dividers
-  const { labels, dividers } = useMemo(() => {
+  const { labels } = useMemo(() => {
     const labelsList: { label: string; pct: number }[] = []
     const dividersList: number[] = []
 
@@ -143,18 +143,27 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
     <section className="bg-surface-container rounded-xl p-6">
       <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Sleep Range</span>
 
+      {/* Time displays above bar */}
+      <div className="grid grid-cols-3 gap-2 text-center mb-3">
+        <div>
+          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Bedtime</span>
+          <span className="font-headline text-2xl font-extralight text-tertiary">{bedtime}</span>
+        </div>
+        <div>
+          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Wake</span>
+          <span className="font-headline text-2xl font-extralight text-primary">{wakeTime}</span>
+        </div>
+        <div>
+          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Out of bed</span>
+          <span className="font-headline text-2xl font-extralight text-tertiary">{outOfBedTime}</span>
+        </div>
+      </div>
+
       <div className="relative">
-        {/* Time labels above bar */}
-        <div className="relative h-4 mb-2">
-          {labels.map((t) => (
-            <span
-              key={t.label}
-              className="absolute font-label text-[10px] text-on-surface-variant/50 -translate-x-1/2"
-              style={{ left: `${t.pct}%` }}
-            >
-              {t.label}
-            </span>
-          ))}
+        {/* Edge labels only */}
+        <div className="flex justify-between mb-1">
+          <span className="font-label text-[10px] text-on-surface-variant/50">{labels[0]?.label}</span>
+          <span className="font-label text-[10px] text-on-surface-variant/50">{labels[labels.length - 1]?.label}</span>
         </div>
 
         {/* Track */}
@@ -163,15 +172,6 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
           className="h-12 w-full bg-surface-container-highest rounded-full relative touch-none select-none"
           {...pointerHandlers}
         >
-          {/* Hour dividers */}
-          {dividers.map((pct, i) => (
-            <div
-              key={i}
-              className="absolute top-2 bottom-2 w-px bg-outline-variant/15"
-              style={{ left: `${pct}%` }}
-            />
-          ))}
-
           {/* In-bed range */}
           <div
             className="absolute top-1.5 bottom-1.5 bg-secondary-container/40 rounded-full"
@@ -204,22 +204,6 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
             className="absolute top-1.5 bottom-1.5 w-3 bg-secondary/60 rounded-full cursor-ew-resize"
             style={{ left: `${positions.outPct}%`, marginLeft: '-6px' }}
           />
-        </div>
-      </div>
-
-      {/* Time displays */}
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        <div>
-          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Bedtime</span>
-          <span className="font-headline text-2xl font-extralight text-tertiary">{bedtime}</span>
-        </div>
-        <div>
-          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Wake</span>
-          <span className="font-headline text-2xl font-extralight text-primary">{wakeTime}</span>
-        </div>
-        <div>
-          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Out of bed</span>
-          <span className="font-headline text-2xl font-extralight text-tertiary">{outOfBedTime}</span>
         </div>
       </div>
 
