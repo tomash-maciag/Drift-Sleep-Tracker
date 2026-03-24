@@ -15,7 +15,7 @@ export function SleepPattern() {
 
   // Sleep window from settings (defaults)
   const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '00:00')
-  const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '07:00')
+  const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '06:00')
 
   // Bar range from settings
   const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '00:00')
@@ -35,7 +35,7 @@ export function SleepPattern() {
 
   // Sleep window positions as percentages
   const windowStartMin = timeToMinutes(sleepWindowStart ?? '00:00')
-  const windowEndMin = timeToMinutes(sleepWindowEnd ?? '07:00')
+  const windowEndMin = timeToMinutes(sleepWindowEnd ?? '06:00')
   const windowStartPct = (normalize(windowStartMin) / rangeTotal) * 100
   const windowEndPct = (normalize(windowEndMin) / rangeTotal) * 100
 

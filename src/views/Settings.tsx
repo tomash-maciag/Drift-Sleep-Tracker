@@ -11,8 +11,8 @@ import type { ExportData } from '../types'
 
 export function Settings() {
   // --- Reactive data ---
-  const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '23:00')
-  const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '07:00')
+  const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '00:00')
+  const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '06:00')
   const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '00:00')
   const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '08:00')
   const notifTime = useSettingLive<string>('notificationTime', '07:30')
@@ -120,7 +120,7 @@ export function Settings() {
             <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Bedtime</span>
             <input
               type="time"
-              value={sleepWindowStart ?? '23:00'}
+              value={sleepWindowStart ?? '00:00'}
               onChange={(e) => setSetting('sleepWindowStart', e.target.value)}
               className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />
@@ -129,7 +129,7 @@ export function Settings() {
             <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Wake up</span>
             <input
               type="time"
-              value={sleepWindowEnd ?? '07:00'}
+              value={sleepWindowEnd ?? '06:00'}
               onChange={(e) => setSetting('sleepWindowEnd', e.target.value)}
               className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />

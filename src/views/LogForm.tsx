@@ -25,26 +25,32 @@ export function LogForm() {
   const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '08:00')
 
   // Sleep window defaults from settings
-  const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '23:00')
-  const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '07:00')
+  const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '00:00')
+  const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '06:00')
 
-  // Sleep bar state — defaults from sleep window settings
-  const [bedtime, setBedtime] = useState('')
-  const [sleepOnset, setSleepOnset] = useState('')
-  const [wakeTime, setWakeTime] = useState('')
-  const [outOfBedTime, setOutOfBedTime] = useState('')
+  // Compute defaults from sleep window
+  const defaultBedtime = sleepWindowStart ?? '00:00'
+  const defaultOnset = minutesToTime((timeToMinutes(defaultBedtime) + 15) % 1440)
+  const defaultWake = sleepWindowEnd ?? '06:00'
+  const defaultOut = minutesToTime((timeToMinutes(defaultWake) + 15) % 1440)
 
-  // Apply sleep window defaults for new entries
+  // Sleep bar state
+  const [bedtime, setBedtime] = useState(defaultBedtime)
+  const [sleepOnset, setSleepOnset] = useState(defaultOnset)
+  const [wakeTime, setWakeTime] = useState(defaultWake)
+  const [outOfBedTime, setOutOfBedTime] = useState(defaultOut)
+
+  // Sync defaults when settings load (async) and no existing log
+  const [defaultsApplied, setDefaultsApplied] = useState(false)
   useEffect(() => {
-    if (!existingLog && sleepWindowStart && sleepWindowEnd) {
-      setBedtime((prev) => prev || sleepWindowStart)
-      const onsetMin = (timeToMinutes(sleepWindowStart) + 15) % 1440
-      setSleepOnset((prev) => prev || minutesToTime(onsetMin))
-      setWakeTime((prev) => prev || sleepWindowEnd)
-      const outMin = (timeToMinutes(sleepWindowEnd) + 15) % 1440
-      setOutOfBedTime((prev) => prev || minutesToTime(outMin))
+    if (!existingLog && !defaultsApplied && sleepWindowStart && sleepWindowEnd) {
+      setBedtime(sleepWindowStart)
+      setSleepOnset(minutesToTime((timeToMinutes(sleepWindowStart) + 15) % 1440))
+      setWakeTime(sleepWindowEnd)
+      setOutOfBedTime(minutesToTime((timeToMinutes(sleepWindowEnd) + 15) % 1440))
+      setDefaultsApplied(true)
     }
-  }, [existingLog, sleepWindowStart, sleepWindowEnd])
+  }, [existingLog, defaultsApplied, sleepWindowStart, sleepWindowEnd])
 
   // Core fields
   const [alarmWake, setAlarmWake] = useState(0) // 0=Spontaneous, 1=Alarm
