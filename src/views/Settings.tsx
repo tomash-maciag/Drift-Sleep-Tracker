@@ -109,29 +109,29 @@ export function Settings() {
   }
 
   return (
-    <main className="px-6 pt-6 pb-32 space-y-6">
+    <div className="space-y-6">
 
       {/* Sleep Window */}
       <Section>
         <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Sleep Window</span>
-        <p className="font-body text-xs text-on-surface-variant/60 mb-4">Your target bedtime and wake time. Used to calculate sleep efficiency and shown as reference lines on charts.</p>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Your target bedtime and wake time. Used to calculate sleep efficiency and shown as reference lines on charts.</p>
         <div className="flex gap-3">
-          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
-            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Bedtime</span>
+          <div className="flex-1 bg-surface-container-low rounded-lg p-4">
+            <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Bedtime</span>
             <input
               type="time"
               value={sleepWindowStart ?? '23:00'}
               onChange={(e) => setSetting('sleepWindowStart', e.target.value)}
-              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+              className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />
           </div>
-          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
-            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Wake up</span>
+          <div className="flex-1 bg-surface-container-low rounded-lg p-4">
+            <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Wake up</span>
             <input
               type="time"
               value={sleepWindowEnd ?? '07:00'}
               onChange={(e) => setSetting('sleepWindowEnd', e.target.value)}
-              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+              className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />
           </div>
         </div>
@@ -140,24 +140,24 @@ export function Settings() {
       {/* Sleep Bar Range */}
       <Section>
         <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Sleep Bar Range</span>
-        <p className="font-body text-xs text-on-surface-variant/60 mb-4">The time range displayed on the logging bar. Adjust if you regularly go to bed before 23:00 or wake after 09:00.</p>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">The time range displayed on the logging bar. Adjust if you regularly go to bed before 23:00 or wake after 09:00.</p>
         <div className="flex gap-3">
-          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
-            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">From</span>
+          <div className="flex-1 bg-surface-container-low rounded-lg p-4">
+            <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">From</span>
             <input
               type="time"
               value={barRangeStart ?? '23:00'}
               onChange={(e) => setSetting('sleepBarRangeStart', e.target.value)}
-              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+              className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />
           </div>
-          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
-            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">To</span>
+          <div className="flex-1 bg-surface-container-low rounded-lg p-4">
+            <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">To</span>
             <input
               type="time"
               value={barRangeEnd ?? '09:00'}
               onChange={(e) => setSetting('sleepBarRangeEnd', e.target.value)}
-              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+              className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />
           </div>
         </div>
@@ -166,24 +166,24 @@ export function Settings() {
       {/* Light Therapy Defaults */}
       <Section>
         <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Light Therapy</span>
-        <p className="font-body text-xs text-on-surface-variant/60 mb-4">Default times pre-filled when logging a new entry.</p>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Default times pre-filled when logging a new entry.</p>
         <div className="flex gap-3">
-          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
-            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Start</span>
+          <div className="flex-1 bg-surface-container-low rounded-lg p-4">
+            <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Start</span>
             <input
               type="time"
               value={lightStart ?? '20:15'}
               onChange={(e) => setSetting('lightTherapyDefaultStart', e.target.value)}
-              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+              className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />
           </div>
-          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
-            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">End</span>
+          <div className="flex-1 bg-surface-container-low rounded-lg p-4">
+            <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">End</span>
             <input
               type="time"
               value={lightEnd ?? '21:15'}
               onChange={(e) => setSetting('lightTherapyDefaultEnd', e.target.value)}
-              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+              className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
             />
           </div>
         </div>
@@ -194,7 +194,7 @@ export function Settings() {
         <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Notifications</span>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="font-body text-sm text-tertiary-dim">Morning reminder</span>
+            <span className="font-body text-base text-tertiary-dim">Morning reminder</span>
             <button
               onClick={handleNotifToggle}
               className={`w-11 h-6 rounded-full transition-all relative ${
@@ -207,13 +207,13 @@ export function Settings() {
             </button>
           </div>
           {isNotifEnabled && (
-            <div className="bg-surface-container-low rounded-lg p-3">
-              <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Remind at</span>
+            <div className="bg-surface-container-low rounded-lg p-4">
+              <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Remind at</span>
               <input
                 type="time"
                 value={notifTime ?? '07:30'}
                 onChange={(e) => setSetting('notificationTime', e.target.value)}
-                className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+                className="bg-transparent font-headline text-2xl font-extralight text-tertiary border-none outline-none w-full"
               />
             </div>
           )}
@@ -223,13 +223,13 @@ export function Settings() {
       {/* Location */}
       <Section>
         <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Location</span>
-        <p className="font-body text-xs text-on-surface-variant/60 mb-4">Used to fetch sunrise/sunset data for the seasonal view. Set once — no GPS needed.</p>
-        <div className="bg-surface-container-low rounded-lg p-3">
-          <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">City</span>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Used to fetch sunrise/sunset data for the seasonal view. Set once — no GPS needed.</p>
+        <div className="bg-surface-container-low rounded-lg p-4">
+          <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">City</span>
           <select
             value={city ?? 'Warszawa'}
             onChange={(e) => setSetting('city', e.target.value)}
-            className="bg-transparent font-body text-sm text-tertiary border-none outline-none w-full appearance-none cursor-pointer"
+            className="bg-transparent font-body text-base text-tertiary border-none outline-none w-full appearance-none cursor-pointer"
           >
             {cities.map((c) => (
               <option key={c} value={c} className="bg-surface-container text-tertiary">{c}</option>
@@ -244,15 +244,15 @@ export function Settings() {
           <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Tags</span>
           <button
             onClick={() => setAddingTag(true)}
-            className="font-label text-[10px] uppercase tracking-[0.1em] text-primary"
+            className="font-label text-xs uppercase tracking-[0.1em] text-primary"
           >
             + Add
           </button>
         </div>
-        <p className="font-body text-xs text-on-surface-variant/60 mb-4">Tags you can attach to daily logs. Add your own or remove ones you don't use.</p>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Tags you can attach to daily logs. Add your own or remove ones you don't use.</p>
 
         {addingTag && (
-          <div className="mb-3 bg-surface-container-low rounded-lg p-3">
+          <div className="mb-3 bg-surface-container-low rounded-lg p-4">
             <input
               type="text"
               autoFocus
@@ -261,7 +261,7 @@ export function Settings() {
               onChange={(e) => setNewTagLabel(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleAddTag() }}
               onBlur={() => { if (newTagLabel.trim()) handleAddTag(); else setAddingTag(false) }}
-              className="bg-transparent font-body text-sm text-tertiary border-none outline-none w-full placeholder:text-on-surface-variant/30"
+              className="bg-transparent font-body text-base text-tertiary border-none outline-none w-full placeholder:text-on-surface-variant/30"
             />
           </div>
         )}
@@ -272,7 +272,7 @@ export function Settings() {
               key={tag.id}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low"
             >
-              <span className="font-label text-xs text-tertiary-dim">{tag.label}</span>
+              <span className="font-label text-sm text-tertiary-dim">{tag.label}</span>
               {!tag.isDefault && (
                 <span className="font-label text-[9px] text-on-surface-variant/40">custom</span>
               )}
@@ -293,22 +293,22 @@ export function Settings() {
           <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Medications</span>
           <button
             onClick={() => setAddingMed(true)}
-            className="font-label text-[10px] uppercase tracking-[0.1em] text-primary"
+            className="font-label text-xs uppercase tracking-[0.1em] text-primary"
           >
             + Add
           </button>
         </div>
-        <p className="font-body text-xs text-on-surface-variant/60 mb-4">Manage your medication list. Changes are logged with dates so you can track how dose adjustments affect sleep.</p>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Manage your medication list. Changes are logged with dates so you can track how dose adjustments affect sleep.</p>
 
         {addingMed && (
-          <div className="mb-3 bg-surface-container-low rounded-lg p-3 space-y-2">
+          <div className="mb-3 bg-surface-container-low rounded-lg p-4 space-y-2">
             <input
               type="text"
               autoFocus
               placeholder="Medication name"
               value={newMedName}
               onChange={(e) => setNewMedName(e.target.value)}
-              className="bg-transparent font-body text-sm text-tertiary border-none outline-none w-full placeholder:text-on-surface-variant/30"
+              className="bg-transparent font-body text-base text-tertiary border-none outline-none w-full placeholder:text-on-surface-variant/30"
             />
             <input
               type="text"
@@ -316,7 +316,7 @@ export function Settings() {
               value={newMedDose}
               onChange={(e) => setNewMedDose(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleAddMed() }}
-              className="bg-transparent font-body text-sm text-tertiary border-none outline-none w-full placeholder:text-on-surface-variant/30"
+              className="bg-transparent font-body text-base text-tertiary border-none outline-none w-full placeholder:text-on-surface-variant/30"
             />
             <div className="flex gap-2 justify-end">
               <button
@@ -327,7 +327,7 @@ export function Settings() {
               </button>
               <button
                 onClick={handleAddMed}
-                className="font-label text-[10px] uppercase tracking-[0.1em] text-primary"
+                className="font-label text-xs uppercase tracking-[0.1em] text-primary"
               >
                 Save
               </button>
@@ -339,11 +339,11 @@ export function Settings() {
           {meds.map((med) => (
             <div
               key={med.id}
-              className={`bg-surface-container-low rounded-lg p-3 ${!med.active ? 'opacity-40' : ''}`}
+              className={`bg-surface-container-low rounded-lg p-4 ${!med.active ? 'opacity-40' : ''}`}
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="font-body text-sm text-tertiary">{med.name}</span>
+                  <span className="font-body text-base text-tertiary">{med.name}</span>
                   <span className="font-label text-[10px] text-on-surface-variant ml-2">{med.currentDose}</span>
                   {!med.active && (
                     <span className="font-label text-[9px] text-on-surface-variant/40 ml-2">inactive</span>
@@ -375,7 +375,7 @@ export function Settings() {
                     value={editDose}
                     onChange={(e) => setEditDose(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') handleUpdateDose(med.id) }}
-                    className="flex-1 bg-surface-container rounded-lg p-2 font-body text-sm text-tertiary border-none outline-none placeholder:text-on-surface-variant/30"
+                    className="flex-1 bg-surface-container rounded-lg p-2 font-body text-base text-tertiary border-none outline-none placeholder:text-on-surface-variant/30"
                     placeholder="New dose"
                   />
                   <button
@@ -386,7 +386,7 @@ export function Settings() {
                   </button>
                   <button
                     onClick={() => handleUpdateDose(med.id)}
-                    className="font-label text-[10px] uppercase tracking-[0.1em] text-primary"
+                    className="font-label text-xs uppercase tracking-[0.1em] text-primary"
                   >
                     Save
                   </button>
@@ -400,17 +400,17 @@ export function Settings() {
       {/* Data */}
       <Section>
         <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Data</span>
-        <p className="font-body text-xs text-on-surface-variant/60 mb-4">Export all your data as a JSON file for backup. Import to restore data on a new device.</p>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Export all your data as a JSON file for backup. Import to restore data on a new device.</p>
         <div className="flex gap-3">
           <button
             onClick={handleExport}
-            className="flex-1 py-3 rounded-lg bg-surface-container-low font-label text-xs uppercase tracking-[0.1em] text-tertiary-dim hover:bg-surface-container-high transition-all"
+            className="flex-1 py-3 rounded-lg bg-surface-container-low font-label text-sm uppercase tracking-[0.1em] text-tertiary-dim hover:bg-surface-container-high transition-all"
           >
             Export
           </button>
           <button
             onClick={handleImport}
-            className="flex-1 py-3 rounded-lg bg-surface-container-low font-label text-xs uppercase tracking-[0.1em] text-tertiary-dim hover:bg-surface-container-high transition-all"
+            className="flex-1 py-3 rounded-lg bg-surface-container-low font-label text-sm uppercase tracking-[0.1em] text-tertiary-dim hover:bg-surface-container-high transition-all"
           >
             Import
           </button>
@@ -428,6 +428,6 @@ export function Settings() {
           className="hidden"
         />
       </Section>
-    </main>
+    </div>
   )
 }
