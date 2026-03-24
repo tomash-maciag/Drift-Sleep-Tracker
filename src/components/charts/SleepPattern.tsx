@@ -84,7 +84,7 @@ export function SleepPattern() {
         </div>
       </div>
 
-      {/* Timeline bars */}
+      {/* Timeline bars — always 7 days */}
       <div className="space-y-3 relative">
         {/* Sleep window target lines */}
         <div className="absolute pointer-events-none z-10" style={{ top: '12px', left: 0, right: 0, bottom: '4px' }}>
@@ -98,7 +98,23 @@ export function SleepPattern() {
           />
         </div>
 
-        {logs.map((log) => {
+        {Array.from({ length: 7 }, (_, i) => {
+          const date = offsetDate(today, -i)
+          const log = logs.find(l => l.date === date)
+          const dayLabel = new Date(date + 'T12:00:00').toLocaleDateString('en', { weekday: 'short' })
+
+          if (!log) {
+            return (
+              <div key={date} className="space-y-1">
+                <div className="flex justify-between items-end px-0.5">
+                  <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-widest">{dayLabel}</span>
+                  <span className="font-label text-xs text-on-surface-variant/20">—</span>
+                </div>
+                <div className="h-3.5 w-full bg-surface-container-low rounded-full overflow-hidden relative opacity-30" />
+              </div>
+            )
+          }
+
           const bedMin = timeToMinutes(log.bedtime)
           const onsetMin = timeToMinutes(log.sleepOnset)
           const wakeMin = timeToMinutes(log.wakeTime)
@@ -110,10 +126,9 @@ export function SleepPattern() {
           const wakePct = (normalize(wakeMin) / rangeTotal) * 100
 
           const metrics = computeSleepMetrics(log)
-          const dayLabel = new Date(log.date + 'T12:00:00').toLocaleDateString('en', { weekday: 'short' })
 
           return (
-            <div key={log.date} className="space-y-1">
+            <div key={date} className="space-y-1">
               <div className="flex justify-between items-end px-0.5">
                 <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-widest">{dayLabel}</span>
                 <span className="font-label text-xs text-tertiary-dim">{formatMinutesAsHMRounded(metrics.tst)}</span>
