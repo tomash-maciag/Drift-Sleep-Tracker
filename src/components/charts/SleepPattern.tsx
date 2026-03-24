@@ -18,8 +18,8 @@ export function SleepPattern() {
   const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '07:00')
 
   // Bar range from settings
-  const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '22:00')
-  const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '10:00')
+  const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '00:00')
+  const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '08:00')
 
   // Compute range in minutes
   const rangeStartMin = timeToMinutes(barRangeStart ?? '22:00')

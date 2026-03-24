@@ -187,36 +187,55 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
           {/* Handle: bedtime */}
           <div
             data-handle-id="bedtime"
-            className="absolute top-2.5 bottom-2.5 w-1.5 bg-secondary/60 rounded-full cursor-ew-resize"
-            style={{ left: `${positions.bedPct}%`, marginLeft: '-3px' }}
+            className="absolute top-1.5 bottom-1.5 w-3 bg-secondary/60 rounded-full cursor-ew-resize"
+            style={{ left: `${positions.bedPct}%`, marginLeft: '-6px' }}
           />
 
           {/* Handle: wake time */}
           <div
             data-handle-id="wake"
-            className="absolute top-2 bottom-2 w-2 bg-secondary rounded-full cursor-ew-resize"
-            style={{ left: `${positions.wakePct}%`, marginLeft: '-4px' }}
+            className="absolute top-1.5 bottom-1.5 w-3 bg-secondary rounded-full cursor-ew-resize"
+            style={{ left: `${positions.wakePct}%`, marginLeft: '-6px' }}
           />
 
           {/* Handle: out of bed */}
           <div
             data-handle-id="outOfBed"
-            className="absolute top-2.5 bottom-2.5 w-1.5 bg-secondary/60 rounded-full cursor-ew-resize"
-            style={{ left: `${positions.outPct}%`, marginLeft: '-3px' }}
+            className="absolute top-1.5 bottom-1.5 w-3 bg-secondary/60 rounded-full cursor-ew-resize"
+            style={{ left: `${positions.outPct}%`, marginLeft: '-6px' }}
           />
         </div>
       </div>
 
-      {/* Range display */}
-      <div className="mt-4 flex justify-between items-end">
+      {/* Time displays */}
+      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
         <div>
-          <span className="font-headline text-2xl font-extralight text-tertiary">
-            {sleepOnset} – {wakeTime}
-          </span>
+          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Bedtime</span>
+          <span className="font-headline text-2xl font-extralight text-tertiary">{bedtime}</span>
         </div>
-        <div className="text-right font-label text-[10px] text-on-surface-variant uppercase tracking-widest space-y-0.5">
-          <div>Slept: {formatMinutesAsHMRounded(metrics.tst)}</div>
-          <div>In bed: {formatMinutesAsHMRounded(metrics.tib)}</div>
+        <div>
+          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Wake</span>
+          <span className="font-headline text-2xl font-extralight text-primary">{wakeTime}</span>
+        </div>
+        <div>
+          <span className="font-label text-[10px] text-on-surface-variant/50 uppercase tracking-wider block mb-1">Out of bed</span>
+          <span className="font-headline text-2xl font-extralight text-tertiary">{outOfBedTime}</span>
+        </div>
+      </div>
+
+      {/* Metrics */}
+      <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+        <div className="bg-surface-container-low rounded-lg py-2.5">
+          <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block">In bed</span>
+          <span className="font-body text-base text-tertiary-dim">{formatMinutesAsHMRounded(metrics.tib)}</span>
+        </div>
+        <div className="bg-surface-container-low rounded-lg py-2.5">
+          <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block">Slept</span>
+          <span className="font-body text-base text-tertiary-dim">{formatMinutesAsHMRounded(metrics.tst)}</span>
+        </div>
+        <div className="bg-surface-container-low rounded-lg py-2.5">
+          <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block">Efficiency</span>
+          <span className="font-body text-base text-tertiary-dim">{Math.round(metrics.se)}%</span>
         </div>
       </div>
     </section>

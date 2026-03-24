@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { useTagsLive, useSettingLive, useTodayLog } from '../hooks/reactive'
 import { createSleepLog, updateSleepLog } from '../hooks/useSleepLogs'
 import { Section } from '../components/Section'
-import { SliderField } from '../components/SliderField'
 import { StepperField } from '../components/StepperField'
 import { ToggleField } from '../components/ToggleField'
 import { TagPicker } from '../components/TagPicker'
@@ -15,14 +14,15 @@ import { todayDate, isSunday } from '../utils/date'
 
 export function LogForm() {
   const navigate = useNavigate()
-  const [date, setDate] = useState(todayDate())
+  const [searchParams] = useSearchParams()
+  const [date, setDate] = useState(searchParams.get('date') || todayDate())
 
   // Check for existing log on this date
   const existingLog = useTodayLog(date)
 
   // Sleep bar range settings
-  const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '23:00')
-  const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '09:00')
+  const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '00:00')
+  const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '08:00')
 
   // Sleep bar state
   const [bedtime, setBedtime] = useState('23:00')
@@ -32,9 +32,8 @@ export function LogForm() {
 
   // Core fields
   const [alarmWake, setAlarmWake] = useState(0) // 0=Spontaneous, 1=Alarm
-  const [quality, setQuality] = useState(7)
-  const [grogginess, setGrogginess] = useState(4)
-  const [alertMinutes, setAlertMinutes] = useState(20)
+  const [quality, setQuality] = useState(1) // 0=Bad, 1=Average, 2=Good
+  const [grogginess, setGrogginess] = useState(0) // 0=No, 1=Yes
 
   // Tags
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
@@ -44,10 +43,20 @@ export function LogForm() {
   const [awakenings, setAwakenings] = useState(0)
   const [note, setNote] = useState('')
 
-  // Light therapy
+  // Light therapy (defaults from settings)
+  const defaultLightStart = useSettingLive<string>('lightTherapyDefaultStart', '20:15')
+  const defaultLightEnd = useSettingLive<string>('lightTherapyDefaultEnd', '21:15')
   const [lightStart, setLightStart] = useState('')
   const [lightEnd, setLightEnd] = useState('')
-  const [lightIntensity, setLightIntensity] = useState('')
+  const [lightIntensity] = useState('40cm')
+
+  // Apply defaults when no existing log and settings loaded
+  useEffect(() => {
+    if (!existingLog && defaultLightStart && defaultLightEnd) {
+      setLightStart((prev) => prev || defaultLightStart)
+      setLightEnd((prev) => prev || defaultLightEnd)
+    }
+  }, [existingLog, defaultLightStart, defaultLightEnd])
 
   // Weekly review
   const [weeklyStress, setWeeklyStress] = useState(5)
@@ -66,15 +75,16 @@ export function LogForm() {
       setWakeTime(existingLog.wakeTime)
       setOutOfBedTime(existingLog.outOfBedTime)
       setAlarmWake(existingLog.alarmWake ? 1 : 0)
-      setQuality(existingLog.sleepQuality)
-      setGrogginess(existingLog.grogginess)
-      setAlertMinutes(existingLog.wakeUpMinutes)
+      // Map stored 1-10 quality to 3-level: <=4=Bad, 5-6=Average, >=7=Good
+      const q = existingLog.sleepQuality
+      setQuality(q <= 4 ? 0 : q <= 6 ? 1 : 2)
+      setGrogginess(existingLog.grogginess >= 5 ? 1 : 0)
       setAwakenings(existingLog.awakenings)
       setNote(existingLog.note ?? '')
       setSelectedTagIds([]) // Tags stored as labels; handled below
       setLightStart(existingLog.lightTherapyStart ?? '')
       setLightEnd(existingLog.lightTherapyEnd ?? '')
-      setLightIntensity(existingLog.lightTherapyIntensity ?? '')
+      // lightIntensity is fixed at 40cm
       setExperimentCondition(existingLog.experimentCondition)
       if (existingLog.weeklyStress !== null) setWeeklyStress(existingLog.weeklyStress)
       if (existingLog.weeklyActivity !== null) setWeeklyActivity(existingLog.weeklyActivity)
@@ -129,9 +139,9 @@ export function LogForm() {
       wakeTime,
       outOfBedTime,
       alarmWake: alarmWake === 1,
-      sleepQuality: quality,
-      grogginess,
-      wakeUpMinutes: alertMinutes,
+      sleepQuality: quality === 0 ? 3 : quality === 1 ? 5 : 8,
+      grogginess: grogginess === 1 ? 7 : 1,
+      wakeUpMinutes: 20,
       awakenings,
       lightTherapyStart: lightStart || null,
       lightTherapyEnd: lightEnd || null,
@@ -186,9 +196,8 @@ export function LogForm() {
           <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Core</span>
           <div className="space-y-5">
             <ToggleField label="Wake type" options={['Spontaneous', 'Alarm']} value={alarmWake} onChange={setAlarmWake} />
-            <SliderField label="Sleep Quality" value={quality} onChange={setQuality} min={1} max={10} leftLabel="Poor" rightLabel="Excellent" />
-            <SliderField label="Grogginess" value={grogginess} onChange={setGrogginess} min={0} max={10} leftLabel="None" rightLabel="Can't function" />
-            <StepperField label="Time to alertness" value={alertMinutes} onChange={setAlertMinutes} min={0} max={90} unit="m" />
+            <ToggleField label="Sleep quality" options={['Bad', 'Average', 'Good']} value={quality} onChange={setQuality} />
+            <ToggleField label="Grogginess" options={['No', 'Yes']} value={grogginess} onChange={setGrogginess} />
           </div>
         </Section>
 
@@ -214,16 +223,6 @@ export function LogForm() {
                 onChange={(e) => setLightEnd(e.target.value)}
                 className="w-full bg-transparent font-body text-sm text-tertiary border-none outline-none"
                 placeholder="--:--"
-              />
-            </div>
-            <div className="flex-1 bg-surface-container-low rounded-lg p-3">
-              <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Distance</span>
-              <input
-                type="text"
-                value={lightIntensity}
-                onChange={(e) => setLightIntensity(e.target.value)}
-                placeholder="e.g. 30cm"
-                className="w-full bg-transparent font-body text-sm text-tertiary placeholder:text-on-surface-variant/30 border-none outline-none"
               />
             </div>
           </div>

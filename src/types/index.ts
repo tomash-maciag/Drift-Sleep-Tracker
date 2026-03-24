@@ -114,6 +114,8 @@ export type SettingKey =
   | 'sleepBarRangeEnd'
   | 'city'
   | 'enabledExtendedFields'
+  | 'lightTherapyDefaultStart'
+  | 'lightTherapyDefaultEnd'
   | 'installedAt'
 
 export interface PhotoperiodEntry {

@@ -1,6 +1,6 @@
 interface ToggleFieldProps {
   label: string
-  options: [string, string]
+  options: string[]
   value: number
   onChange: (value: number) => void
 }

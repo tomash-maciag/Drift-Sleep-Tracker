@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks'
-import { getSleepLogsInRange, getSleepLogByDate } from './useSleepLogs'
+import { getSleepLogsInRange, getSleepLogByDate, getAllSleepLogs } from './useSleepLogs'
 import { computeKPI } from './useKPI'
 import { getAllTags } from './useTags'
 import { getActiveMedications, getAllMedications } from './useMedications'
@@ -33,6 +33,10 @@ export function useAllMedsLive(): Medication[] {
 
 export function useActiveExperimentLive(): Experiment | null | undefined {
   return useLiveQuery(() => getActiveExperiment(), [])
+}
+
+export function useAllSleepLogsLive(): SleepLog[] {
+  return useLiveQuery(() => getAllSleepLogs(), [], [])
 }
 
 export function useSettingLive<T>(key: string, defaultValue: T): T | null {

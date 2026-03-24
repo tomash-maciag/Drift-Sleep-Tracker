@@ -13,10 +13,12 @@ export function Settings() {
   // --- Reactive data ---
   const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '23:00')
   const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '07:00')
-  const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '23:00')
-  const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '09:00')
+  const barRangeStart = useSettingLive<string>('sleepBarRangeStart', '00:00')
+  const barRangeEnd = useSettingLive<string>('sleepBarRangeEnd', '08:00')
   const notifTime = useSettingLive<string>('notificationTime', '07:30')
   const city = useSettingLive<string>('city', 'Warszawa')
+  const lightStart = useSettingLive<string>('lightTherapyDefaultStart', '20:15')
+  const lightEnd = useSettingLive<string>('lightTherapyDefaultEnd', '21:15')
   const tags = useTagsLive()
   const meds = useAllMedsLive()
 
@@ -155,6 +157,32 @@ export function Settings() {
               type="time"
               value={barRangeEnd ?? '09:00'}
               onChange={(e) => setSetting('sleepBarRangeEnd', e.target.value)}
+              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+            />
+          </div>
+        </div>
+      </Section>
+
+      {/* Light Therapy Defaults */}
+      <Section>
+        <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Light Therapy</span>
+        <p className="font-body text-xs text-on-surface-variant/60 mb-4">Default times pre-filled when logging a new entry.</p>
+        <div className="flex gap-3">
+          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
+            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Start</span>
+            <input
+              type="time"
+              value={lightStart ?? '20:15'}
+              onChange={(e) => setSetting('lightTherapyDefaultStart', e.target.value)}
+              className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
+            />
+          </div>
+          <div className="flex-1 bg-surface-container-low rounded-lg p-3">
+            <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">End</span>
+            <input
+              type="time"
+              value={lightEnd ?? '21:15'}
+              onChange={(e) => setSetting('lightTherapyDefaultEnd', e.target.value)}
               className="bg-transparent font-headline text-lg font-extralight text-tertiary border-none outline-none w-full"
             />
           </div>

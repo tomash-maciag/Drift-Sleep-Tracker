@@ -28,6 +28,10 @@ export async function getSleepLogsInRange(startDate: string, endDate: string): P
   return db.sleepLogs.where('date').between(startDate, endDate, true, true).sortBy('date')
 }
 
+export async function getAllSleepLogs(): Promise<SleepLog[]> {
+  return db.sleepLogs.orderBy('date').reverse().toArray()
+}
+
 export async function deleteSleepLog(id: string): Promise<void> {
   await db.sleepLogs.delete(id)
 }

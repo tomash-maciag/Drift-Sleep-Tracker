@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import { seedDefaults } from './db/seed'
 
-seedDefaults()
+seedDefaults().catch((err) => console.error('Seed failed:', err))
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
