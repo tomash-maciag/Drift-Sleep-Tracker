@@ -39,17 +39,20 @@ export function LogForm() {
   const [wakeTime, setWakeTime] = useState(defaultWake)
   const [outOfBedTime, setOutOfBedTime] = useState(defaultOut)
 
+  // Wait for DB to finish loading before applying defaults
+  const isLoading = existingLog === undefined
+
   // Sync defaults when settings load (async) and no existing log
   const [defaultsApplied, setDefaultsApplied] = useState(false)
   useEffect(() => {
-    if (!existingLog && !defaultsApplied && sleepWindowStart && sleepWindowEnd) {
+    if (!isLoading && existingLog === null && !defaultsApplied && sleepWindowStart && sleepWindowEnd) {
       setBedtime(sleepWindowStart)
       setSleepOnset(minutesToTime((timeToMinutes(sleepWindowStart) + 15) % 1440))
       setWakeTime(sleepWindowEnd)
       setOutOfBedTime(minutesToTime((timeToMinutes(sleepWindowEnd) + 15) % 1440))
       setDefaultsApplied(true)
     }
-  }, [existingLog, defaultsApplied, sleepWindowStart, sleepWindowEnd])
+  }, [isLoading, existingLog, defaultsApplied, sleepWindowStart, sleepWindowEnd])
 
   // Core fields
   const [alarmWake, setAlarmWake] = useState(0) // 0=Spontaneous, 1=Alarm
@@ -66,12 +69,12 @@ export function LogForm() {
 
   // Reset awakening state when date changes (new entry)
   useEffect(() => {
-    if (!existingLog) {
+    if (!isLoading && existingLog === null) {
       setHasAwakening(0)
       setAwakeningTime('05:00')
       setAwakeningDuration(15)
     }
-  }, [date, existingLog])
+  }, [date, isLoading, existingLog])
 
   // Medications — only meds with defaultTaken are pre-checked for new entries
   const activeMeds = useActiveMedsLive()
@@ -79,11 +82,11 @@ export function LogForm() {
   const [medsInitialized, setMedsInitialized] = useState(false)
 
   useEffect(() => {
-    if (!medsInitialized && activeMeds.length > 0 && !existingLog) {
+    if (!isLoading && !medsInitialized && activeMeds.length > 0 && existingLog === null) {
       setTakenMeds(activeMeds.filter((m) => m.defaultTaken).map((m) => m.name))
       setMedsInitialized(true)
     }
-  }, [medsInitialized, activeMeds, existingLog])
+  }, [isLoading, medsInitialized, activeMeds, existingLog])
 
   const handleMedToggle = (medName: string) => {
     setTakenMeds((prev) =>
@@ -104,11 +107,11 @@ export function LogForm() {
 
   // Apply defaults when no existing log and settings loaded
   useEffect(() => {
-    if (!existingLog && defaultLightStart && defaultLightEnd) {
+    if (!isLoading && existingLog === null && defaultLightStart && defaultLightEnd) {
       setLightStart((prev) => prev || defaultLightStart)
       setLightEnd((prev) => prev || defaultLightEnd)
     }
-  }, [existingLog, defaultLightStart, defaultLightEnd])
+  }, [isLoading, existingLog, defaultLightStart, defaultLightEnd])
 
   // Weekly review
   const [weeklyStress, setWeeklyStress] = useState(5)
