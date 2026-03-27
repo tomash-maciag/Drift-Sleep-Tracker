@@ -41,6 +41,7 @@ export interface Medication {
   name: string
   currentDose: string
   active: boolean
+  defaultTaken: boolean
   createdAt: string
   updatedAt: string
   syncedAt: string | null

@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
-import { useTagsLive, useSettingLive, useTodayLog } from '../hooks/reactive'
+import { useTagsLive, useSettingLive, useTodayLog, useActiveMedsLive } from '../hooks/reactive'
 import { createSleepLog, updateSleepLog } from '../hooks/useSleepLogs'
 import { Section } from '../components/Section'
-import { StepperField } from '../components/StepperField'
 import { ToggleField } from '../components/ToggleField'
 import { TagPicker } from '../components/TagPicker'
 import { SleepBar } from '../components/SleepBar/SleepBar'
@@ -60,9 +59,31 @@ export function LogForm() {
   // Tags
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
 
+  // Awakening
+  const [hasAwakening, setHasAwakening] = useState(0) // 0=No, 1=Yes
+  const [awakeningTime, setAwakeningTime] = useState('')
+  const [awakeningDuration, setAwakeningDuration] = useState<15 | 30 | 45>(15)
+
+  // Medications — only meds with defaultTaken are pre-checked for new entries
+  const activeMeds = useActiveMedsLive()
+  const [takenMeds, setTakenMeds] = useState<string[]>([])
+  const [medsInitialized, setMedsInitialized] = useState(false)
+
+  useEffect(() => {
+    if (!medsInitialized && activeMeds.length > 0 && !existingLog) {
+      setTakenMeds(activeMeds.filter((m) => m.defaultTaken).map((m) => m.name))
+      setMedsInitialized(true)
+    }
+  }, [medsInitialized, activeMeds, existingLog])
+
+  const handleMedToggle = (medName: string) => {
+    setTakenMeds((prev) =>
+      prev.includes(medName) ? prev.filter((m) => m !== medName) : [...prev, medName]
+    )
+  }
+
   // Extended
   const [showExtended, setShowExtended] = useState(false)
-  const [awakenings, setAwakenings] = useState(0)
   const [note, setNote] = useState('')
 
   // Light therapy (defaults from settings)
@@ -101,7 +122,10 @@ export function LogForm() {
       const q = existingLog.sleepQuality
       setQuality(q <= 4 ? 0 : q <= 6 ? 1 : 2)
       setGrogginess(existingLog.grogginess >= 5 ? 1 : 0)
-      setAwakenings(existingLog.awakenings)
+      if (existingLog.awakenings > 0) {
+        setHasAwakening(1)
+        // We don't store awakening time/duration separately yet, so leave defaults
+      }
       setNote(existingLog.note ?? '')
       setSelectedTagIds([]) // Tags stored as labels; handled below
       setLightStart(existingLog.lightTherapyStart ?? '')
@@ -164,7 +188,7 @@ export function LogForm() {
       sleepQuality: quality === 0 ? 3 : quality === 1 ? 5 : 8,
       grogginess: grogginess === 1 ? 7 : 1,
       wakeUpMinutes: 20,
-      awakenings,
+      awakenings: hasAwakening === 1 ? 1 : 0,
       lightTherapyStart: lightStart || null,
       lightTherapyEnd: lightEnd || null,
       lightTherapyIntensity: lightIntensity || null,
@@ -213,9 +237,44 @@ export function LogForm() {
           onChange={handleSleepBarChange}
         />
 
+        {/* Awakening */}
+        <Section>
+          <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Night Awakening</span>
+          <ToggleField label="Woke up at night" options={['No', 'Yes']} value={hasAwakening} onChange={setHasAwakening} />
+          {hasAwakening === 1 && (
+            <div className="mt-4 flex gap-3 items-end">
+              <div className="flex-1 bg-surface-container-low rounded-lg p-3">
+                <span className="font-label text-[9px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Time</span>
+                <input
+                  type="time"
+                  value={awakeningTime}
+                  onChange={(e) => setAwakeningTime(e.target.value)}
+                  className="w-full bg-transparent font-body text-sm text-tertiary border-none outline-none"
+                />
+              </div>
+              <div className="flex gap-2">
+                {([15, 30, 45] as const).map((d) => (
+                  <button
+                    key={d}
+                    onClick={() => setAwakeningDuration(d)}
+                    className={`px-3 py-2.5 rounded-lg font-label text-xs transition-all ${
+                      awakeningDuration === d
+                        ? 'bg-primary/20 text-primary border border-primary/30'
+                        : 'bg-surface-container-low text-on-surface-variant border border-transparent'
+                    }`}
+                    aria-label={`${d} minutes`}
+                  >
+                    ~{d}m
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </Section>
+
         {/* Core Fields */}
         <Section>
-          <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Core</span>
+          <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Morning</span>
           <div className="space-y-5">
             <ToggleField label="Wake type" options={['Spontaneous', 'Alarm']} value={alarmWake} onChange={setAlarmWake} />
             <ToggleField label="Sleep quality" options={['Bad', 'Average', 'Good']} value={quality} onChange={setQuality} />
@@ -257,7 +316,7 @@ export function LogForm() {
         </Section>
 
         {/* Medications */}
-        <MedicationPanel />
+        <MedicationPanel takenMeds={takenMeds} onToggle={handleMedToggle} />
 
         {/* Extended Fields (collapsible) */}
         <section className="bg-surface-container rounded-xl overflow-hidden">
@@ -276,7 +335,6 @@ export function LogForm() {
 
           {showExtended && (
             <div className="px-6 pb-6 space-y-5 border-t border-outline-variant/10 pt-5">
-              <StepperField label="Night awakenings" value={awakenings} onChange={setAwakenings} min={0} max={10} unit="" step={1} />
               <div>
                 <span className="font-body text-sm text-tertiary-dim block mb-2">Note</span>
                 <textarea

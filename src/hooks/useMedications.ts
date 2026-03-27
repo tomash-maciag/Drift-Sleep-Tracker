@@ -4,7 +4,7 @@ import type { Medication, MedicationChange } from '../types'
 
 export async function addMedication(name: string, dose: string): Promise<Medication> {
   const timestamp = now()
-  const med: Medication = { id: generateId(), name, currentDose: dose, active: true, createdAt: timestamp, updatedAt: timestamp, syncedAt: null }
+  const med: Medication = { id: generateId(), name, currentDose: dose, active: true, defaultTaken: false, createdAt: timestamp, updatedAt: timestamp, syncedAt: null }
   await db.medications.add(med)
   return med
 }
@@ -22,6 +22,12 @@ export async function updateMedicationDose(medicationId: string, newDose: string
 
 export async function deactivateMedication(id: string): Promise<void> {
   await db.medications.update(id, { active: false, updatedAt: now() })
+}
+
+export async function toggleDefaultTaken(id: string): Promise<void> {
+  const med = await db.medications.get(id)
+  if (!med) return
+  await db.medications.update(id, { defaultTaken: !med.defaultTaken, updatedAt: now() })
 }
 
 export async function getActiveMedications(): Promise<Medication[]> {

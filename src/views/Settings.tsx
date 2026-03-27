@@ -2,7 +2,7 @@ import { useState, useRef, useMemo } from 'react'
 import { useSettingLive, useTagsLive, useAllMedsLive } from '../hooks/reactive'
 import { setSetting } from '../hooks/useSettings'
 import { addTag, removeTag } from '../hooks/useTags'
-import { addMedication, updateMedicationDose, deactivateMedication } from '../hooks/useMedications'
+import { addMedication, updateMedicationDose, deactivateMedication, toggleDefaultTaken } from '../hooks/useMedications'
 import { exportAllData, importAllData, downloadJson } from '../hooks/useDataExport'
 import { requestNotificationPermission } from '../hooks/useNotifications'
 import { getAvailableCities } from '../utils/cities'
@@ -361,11 +361,24 @@ export function Settings() {
                       onClick={() => deactivateMedication(med.id)}
                       className="font-label text-[10px] text-on-surface-variant/40 hover:text-error"
                     >
-                      Deactivate
+                      Remove
                     </button>
                   )}
                 </div>
               </div>
+              {med.active && (
+                <button
+                  onClick={() => toggleDefaultTaken(med.id)}
+                  className="mt-2 flex items-center gap-2"
+                >
+                  <span className={`material-symbols-outlined text-base ${med.defaultTaken ? 'text-primary' : 'text-on-surface-variant/30'}`}>
+                    {med.defaultTaken ? 'check_box' : 'check_box_outline_blank'}
+                  </span>
+                  <span className="font-label text-[10px] text-on-surface-variant uppercase tracking-wider">
+                    Auto-check in daily log
+                  </span>
+                </button>
+              )}
 
               {editingMedId === med.id && (
                 <div className="mt-2 flex gap-2 items-center">
