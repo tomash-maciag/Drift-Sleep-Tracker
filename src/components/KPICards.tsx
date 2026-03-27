@@ -11,7 +11,24 @@ export function KPICards({ kpi, days, setDays }: KPICardsProps) {
   const cards = kpi && kpi.avgTst !== null ? [
     { label: 'Sleep Time', value: formatMinutesAsHMRounded(kpi.avgTst!).replace('h ', 'h\u00A0'), unit: '' },
     { label: 'Wake Up', value: minutesToTimeRounded(kpi.avgWakeTime!), unit: '' },
-    { label: 'Trend', value: kpi.trend === 'up' ? '\u2191' : kpi.trend === 'down' ? '\u2193' : '\u2014', unit: kpi.trend === 'up' ? 'Improving' : kpi.trend === 'down' ? 'Declining' : 'Stable' },
+    {
+      label: 'Consistency',
+      value: kpi.wakeConsistency !== null ? `±${kpi.wakeConsistency}` : '—',
+      unit: kpi.wakeConsistency !== null ? 'min' : '',
+    },
+    {
+      label: 'Gap',
+      value: kpi.sleepGap !== null
+        ? kpi.sleepGap >= -10 && kpi.sleepGap <= 10
+          ? '✓'
+          : `${kpi.sleepGap > 0 ? '+' : ''}${formatMinutesAsHMRounded(Math.abs(kpi.sleepGap))}`
+        : '—',
+      unit: kpi.sleepGap !== null
+        ? kpi.sleepGap >= -10 && kpi.sleepGap <= 10
+          ? 'On target'
+          : kpi.sleepGap > 10 ? 'Over' : 'Deficit'
+        : '',
+    },
   ] : null
 
   return (

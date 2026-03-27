@@ -134,6 +134,8 @@ export interface KPI {
   avgWakeTime: number | null
   avgSe: number | null
   trend: 'up' | 'down' | 'stable' | null
+  wakeConsistency: number | null // std dev of wake time in minutes
+  sleepGap: number | null // avg TST minus target TST in minutes (negative = deficit)
 }
 
 export interface Insight {
