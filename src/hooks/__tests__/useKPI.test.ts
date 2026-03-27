@@ -13,7 +13,7 @@ const makeLog = (_date: string, wakeTime: string, quality: number) => ({
   bedtime: '23:00', sleepOnset: '23:15', wakeTime, outOfBedTime: wakeTime,
   alarmWake: false, sleepQuality: quality, grogginess: 3, wakeUpMinutes: 15, awakenings: 0, awakeningTime: null, awakeningDuration: null,
   lightTherapyStart: null, lightTherapyEnd: null, lightTherapyIntensity: null,
-  tags: [], note: null, experimentCondition: null,
+  tags: [], medicationsTaken: [], note: null, experimentCondition: null,
   weeklyStress: null, weeklyActivity: null, weeklyInflammation: null, weeklyRating: null,
 })
 

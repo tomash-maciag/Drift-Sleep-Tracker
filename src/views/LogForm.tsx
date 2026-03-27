@@ -141,6 +141,7 @@ export function LogForm() {
       }
       setNote(existingLog.note ?? '')
       setSelectedTagIds([]) // Tags stored as labels; handled below
+      if (existingLog.medicationsTaken) setTakenMeds(existingLog.medicationsTaken)
       setLightStart(existingLog.lightTherapyStart ?? '')
       setLightEnd(existingLog.lightTherapyEnd ?? '')
       // lightIntensity is fixed at 40cm
@@ -208,6 +209,7 @@ export function LogForm() {
       lightTherapyEnd: lightEnd || null,
       lightTherapyIntensity: lightIntensity || null,
       tags: tagLabels,
+      medicationsTaken: takenMeds,
       note: note || null,
       experimentCondition,
       weeklyStress: isSundayDate ? weeklyStress : null,

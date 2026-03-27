@@ -6,7 +6,7 @@ const makeLog = (date: string, se: number, wakeTime: string, quality: number): S
   id: date, date, bedtime: '23:00', sleepOnset: '23:15', wakeTime, outOfBedTime: wakeTime,
   alarmWake: false, sleepQuality: quality, grogginess: 3, wakeUpMinutes: 15, awakenings: 0, awakeningTime: null, awakeningDuration: null,
   lightTherapyStart: null, lightTherapyEnd: null, lightTherapyIntensity: null,
-  tags: [], note: null, experimentCondition: null,
+  tags: [], medicationsTaken: [], note: null, experimentCondition: null,
   weeklyStress: null, weeklyActivity: null, weeklyInflammation: null, weeklyRating: null,
   createdAt: '', updatedAt: '', syncedAt: null,
   metrics: { tst: 0, tib: 0, se, sol: 0 },

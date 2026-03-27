@@ -16,6 +16,7 @@ export interface SleepLog {
   lightTherapyEnd: string | null
   lightTherapyIntensity: string | null
   tags: string[]
+  medicationsTaken: string[]
   note: string | null
   experimentCondition: string | null
   weeklyStress: number | null

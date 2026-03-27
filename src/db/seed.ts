@@ -77,6 +77,7 @@ export async function seedDefaults(): Promise<void> {
       lightTherapyEnd: null,
       lightTherapyIntensity: null,
       tags: [],
+      medicationsTaken: [],
       note: null,
       experimentCondition: null,
       weeklyStress: null,
