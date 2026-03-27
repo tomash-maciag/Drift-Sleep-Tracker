@@ -15,8 +15,6 @@ interface Card {
 }
 
 export function KPICards({ kpi, days, setDays }: KPICardsProps) {
-  const periodLabel = `${days}D`
-
   const cards: Card[] | null = kpi && kpi.avgTst !== null ? [
     {
       label: 'Sleep time',
