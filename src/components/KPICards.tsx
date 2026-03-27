@@ -7,17 +7,38 @@ interface KPICardsProps {
   setDays: (d: 7 | 14 | 30) => void
 }
 
+interface Card {
+  label: string
+  badge: string
+  value: string
+  unit: string
+}
+
 export function KPICards({ kpi, days, setDays }: KPICardsProps) {
-  const cards = kpi && kpi.avgTst !== null ? [
-    { label: 'Sleep Time', value: formatMinutesAsHMRounded(kpi.avgTst!).replace('h ', 'h\u00A0'), unit: '' },
-    { label: 'Wake Up', value: minutesToTimeRounded(kpi.avgWakeTime!), unit: '' },
+  const periodLabel = `${days}D`
+
+  const cards: Card[] | null = kpi && kpi.avgTst !== null ? [
     {
-      label: 'Consistency',
-      value: kpi.wakeConsistency !== null ? `±${kpi.wakeConsistency}` : '—',
-      unit: kpi.wakeConsistency !== null ? 'min' : '',
+      label: 'Sleep time',
+      badge: 'AVG',
+      value: formatMinutesAsHMRounded(kpi.avgTst!).replace('h ', 'h\u00A0'),
+      unit: '',
     },
     {
-      label: 'Gap',
+      label: 'Wake time',
+      badge: 'AVG',
+      value: minutesToTimeRounded(kpi.avgWakeTime!),
+      unit: '',
+    },
+    {
+      label: 'Wake spread',
+      badge: periodLabel,
+      value: kpi.wakeConsistency !== null ? `${kpi.wakeConsistency}` : '—',
+      unit: kpi.wakeConsistency !== null ? '±min' : '',
+    },
+    {
+      label: 'Sleep gap',
+      badge: 'VS TARGET',
       value: kpi.sleepGap !== null
         ? kpi.sleepGap >= -10 && kpi.sleepGap <= 10
           ? '✓'
@@ -54,7 +75,10 @@ export function KPICards({ kpi, days, setDays }: KPICardsProps) {
         <div className="grid grid-cols-2 gap-3">
           {cards.map((card) => (
             <div key={card.label} className="p-5 bg-surface-container rounded-xl flex flex-col justify-between h-28">
-              <span className="font-label text-[10px] uppercase tracking-[0.15em] text-on-surface-variant">{card.label}</span>
+              <div className="flex items-center justify-between">
+                <span className="font-label text-[10px] uppercase tracking-[0.15em] text-on-surface-variant">{card.label}</span>
+                <span className="font-label text-[8px] uppercase tracking-[0.1em] text-primary/50">{card.badge}</span>
+              </div>
               <div className="flex items-baseline gap-1">
                 <span className="font-headline text-3xl font-extralight text-tertiary">{card.value}</span>
                 {card.unit && <span className="font-label text-xs text-primary">{card.unit}</span>}
