@@ -31,22 +31,22 @@ export function KPICards({ kpi, days, setDays }: KPICardsProps) {
     {
       label: 'Wake spread',
       badge: '±AVG',
-      value: kpi.wakeConsistency !== null ? `${kpi.wakeConsistency}` : '—',
-      unit: kpi.wakeConsistency !== null ? 'M' : '',
+      value: kpi.wakeConsistency !== null ? `${kpi.wakeConsistency} m` : '—',
+      unit: '',
     },
     {
       label: 'Sleep gap',
-      badge: 'VS TARGET',
+      badge: kpi.sleepGap !== null
+        ? kpi.sleepGap >= -10 && kpi.sleepGap <= 10
+          ? 'ON TARGET'
+          : kpi.sleepGap > 10 ? 'SURPLUS' : 'DEFICIT'
+        : '',
       value: kpi.sleepGap !== null
         ? kpi.sleepGap >= -10 && kpi.sleepGap <= 10
           ? '✓'
-          : `${kpi.sleepGap > 0 ? '+' : ''}${Math.abs(kpi.sleepGap)}`
+          : `${kpi.sleepGap > 0 ? '+' : '−'}${Math.abs(kpi.sleepGap)} m`
         : '—',
-      unit: kpi.sleepGap !== null
-        ? kpi.sleepGap >= -10 && kpi.sleepGap <= 10
-          ? 'On target'
-          : kpi.sleepGap > 10 ? 'M over' : 'M deficit'
-        : '',
+      unit: '',
     },
   ] : null
 
