@@ -61,7 +61,6 @@ export function History() {
                   </div>
                   <div className="flex gap-4 font-label text-[10px] text-on-surface-variant/60 uppercase tracking-wider">
                     <span>Slept {formatMinutesAsHMRounded(metrics.tst)}</span>
-                    <span>SE {Math.round(metrics.se)}%</span>
                   </div>
                 </div>
 

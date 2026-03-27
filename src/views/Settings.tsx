@@ -114,7 +114,7 @@ export function Settings() {
       {/* Sleep Window */}
       <Section>
         <span className="font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant block mb-4">Sleep Window</span>
-        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Your target bedtime and wake time. Used to calculate sleep efficiency and shown as reference lines on charts.</p>
+        <p className="font-body text-sm text-on-surface-variant/60 mb-4">Your target bedtime and wake time. Shown as reference lines on charts.</p>
         <div className="flex gap-3">
           <div className="flex-1 bg-surface-container-low rounded-lg p-4">
             <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block mb-1">Bedtime</span>

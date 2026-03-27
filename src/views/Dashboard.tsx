@@ -5,7 +5,6 @@ import { SleepPattern } from '../components/charts/SleepPattern'
 import { InsightsPanel } from '../components/InsightsPanel'
 import { KPICards } from '../components/KPICards'
 import { WakeTrend } from '../components/charts/WakeTrend'
-import { EfficiencyChart } from '../components/charts/EfficiencyChart'
 import { ChartCard } from '../components/ChartCard'
 import { useKPILive, useSleepLogsLive, useSettingLive } from '../hooks/reactive'
 import { computeSleepMetrics } from '../utils/sleep-math'
@@ -58,17 +57,6 @@ export function Dashboard() {
           variant="high"
         >
           <WakeTrend days={days} />
-        </ChartCard>
-      )}
-      {kpi && kpi.avgSe !== null && (
-        <ChartCard
-          title="Efficiency"
-          subLabel="Target 85%"
-          legendDash
-          value={`${kpi.avgSe!.toFixed(0)}%`}
-          valueLabel="Avg"
-        >
-          <EfficiencyChart days={days} />
         </ChartCard>
       )}
     </>

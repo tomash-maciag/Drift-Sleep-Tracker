@@ -38,11 +38,6 @@ export function LastNight() {
           <span className="font-headline text-2xl font-extralight text-tertiary">{todayLog.wakeTime}</span>
           <span className="font-label text-[10px] text-secondary ml-1">wake</span>
         </div>
-        <div className="w-px h-5 bg-outline-variant/20" />
-        <div>
-          <span className="font-headline text-2xl font-extralight text-tertiary">{metrics.se.toFixed(0)}</span>
-          <span className="font-label text-[10px] text-primary ml-0.5">%</span>
-        </div>
       </div>
     </section>
   )

@@ -208,7 +208,7 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
       </div>
 
       {/* Metrics */}
-      <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+      <div className="mt-3 grid grid-cols-2 gap-2 text-center">
         <div className="bg-surface-container-low rounded-lg py-2.5">
           <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block">In bed</span>
           <span className="font-body text-base text-tertiary-dim">{formatMinutesAsHMRounded(metrics.tib)}</span>
@@ -216,10 +216,6 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
         <div className="bg-surface-container-low rounded-lg py-2.5">
           <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block">Slept</span>
           <span className="font-body text-base text-tertiary-dim">{formatMinutesAsHMRounded(metrics.tst)}</span>
-        </div>
-        <div className="bg-surface-container-low rounded-lg py-2.5">
-          <span className="font-label text-[10px] text-on-surface-variant/40 uppercase tracking-wider block">Efficiency</span>
-          <span className="font-body text-base text-tertiary-dim">{Math.round(metrics.se)}%</span>
         </div>
       </div>
     </section>
