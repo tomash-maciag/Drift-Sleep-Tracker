@@ -61,8 +61,17 @@ export function LogForm() {
 
   // Awakening
   const [hasAwakening, setHasAwakening] = useState(0) // 0=No, 1=Yes
-  const [awakeningTime, setAwakeningTime] = useState('')
+  const [awakeningTime, setAwakeningTime] = useState('05:00')
   const [awakeningDuration, setAwakeningDuration] = useState<15 | 30 | 45>(15)
+
+  // Reset awakening state when date changes (new entry)
+  useEffect(() => {
+    if (!existingLog) {
+      setHasAwakening(0)
+      setAwakeningTime('05:00')
+      setAwakeningDuration(15)
+    }
+  }, [date, existingLog])
 
   // Medications — only meds with defaultTaken are pre-checked for new entries
   const activeMeds = useActiveMedsLive()
