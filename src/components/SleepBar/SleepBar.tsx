@@ -169,18 +169,18 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
         {/* Track */}
         <div
           ref={barRef}
-          className="h-12 w-full bg-surface-container-highest rounded-full relative touch-none select-none"
+          className="h-12 w-full bg-surface-container-highest rounded-lg relative touch-none select-none"
           {...pointerHandlers}
         >
           {/* In-bed range */}
           <div
-            className="absolute top-1.5 bottom-1.5 bg-secondary-container/40 rounded-full"
+            className="absolute top-1.5 bottom-1.5 bg-secondary-container/40 rounded-sm"
             style={{ left: `${positions.bedPct}%`, width: `${positions.outPct - positions.bedPct}%` }}
           />
 
           {/* Sleep range */}
           <div
-            className="absolute top-1.5 bottom-1.5 bg-primary/80 rounded-full"
+            className="absolute top-1.5 bottom-1.5 bg-primary/80 rounded-sm"
             style={{ left: `${positions.onsetPct}%`, width: `${positions.wakePct - positions.onsetPct}%` }}
           />
 

@@ -10,6 +10,8 @@ export interface SleepLog {
   grogginess: number // 0-10
   wakeUpMinutes: number // 0-90
   awakenings: number // 0-5
+  awakeningTime: string | null // HH:MM
+  awakeningDuration: number | null // minutes (15, 30, 45)
   lightTherapyStart: string | null
   lightTherapyEnd: string | null
   lightTherapyIntensity: string | null

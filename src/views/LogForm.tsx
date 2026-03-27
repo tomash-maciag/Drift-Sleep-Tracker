@@ -124,7 +124,8 @@ export function LogForm() {
       setGrogginess(existingLog.grogginess >= 5 ? 1 : 0)
       if (existingLog.awakenings > 0) {
         setHasAwakening(1)
-        // We don't store awakening time/duration separately yet, so leave defaults
+        if (existingLog.awakeningTime) setAwakeningTime(existingLog.awakeningTime)
+        if (existingLog.awakeningDuration) setAwakeningDuration(existingLog.awakeningDuration as 15 | 30 | 45)
       }
       setNote(existingLog.note ?? '')
       setSelectedTagIds([]) // Tags stored as labels; handled below
@@ -189,6 +190,8 @@ export function LogForm() {
       grogginess: grogginess === 1 ? 7 : 1,
       wakeUpMinutes: 20,
       awakenings: hasAwakening === 1 ? 1 : 0,
+      awakeningTime: hasAwakening === 1 && awakeningTime ? awakeningTime : null,
+      awakeningDuration: hasAwakening === 1 ? awakeningDuration : null,
       lightTherapyStart: lightStart || null,
       lightTherapyEnd: lightEnd || null,
       lightTherapyIntensity: lightIntensity || null,

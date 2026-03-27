@@ -71,6 +71,8 @@ export async function seedDefaults(): Promise<void> {
       grogginess: 5,
       wakeUpMinutes: 20,
       awakenings: 0,
+      awakeningTime: null,
+      awakeningDuration: null,
       lightTherapyStart: null,
       lightTherapyEnd: null,
       lightTherapyIntensity: null,
