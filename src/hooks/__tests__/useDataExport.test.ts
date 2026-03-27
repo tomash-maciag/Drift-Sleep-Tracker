@@ -13,7 +13,7 @@ beforeEach(async () => {
 
 const baseLog = {
   bedtime: '23:00', sleepOnset: '23:15', wakeTime: '06:00', outOfBedTime: '06:30',
-  alarmWake: false, sleepQuality: 7, grogginess: 3, wakeUpMinutes: 15, awakenings: 0,
+  alarmWake: false, sleepQuality: 7, grogginess: 3, wakeUpMinutes: 15, awakenings: 0, awakeningTime: null, awakeningDuration: null,
   lightTherapyStart: null, lightTherapyEnd: null, lightTherapyIntensity: null,
   tags: [], note: null, experimentCondition: null,
   weeklyStress: null, weeklyActivity: null, weeklyInflammation: null, weeklyRating: null,

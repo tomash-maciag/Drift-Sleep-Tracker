@@ -4,7 +4,7 @@ import type { SleepLogWithMetrics } from '../../types'
 
 const makeLog = (date: string, se: number, wakeTime: string, quality: number): SleepLogWithMetrics => ({
   id: date, date, bedtime: '23:00', sleepOnset: '23:15', wakeTime, outOfBedTime: wakeTime,
-  alarmWake: false, sleepQuality: quality, grogginess: 3, wakeUpMinutes: 15, awakenings: 0,
+  alarmWake: false, sleepQuality: quality, grogginess: 3, wakeUpMinutes: 15, awakenings: 0, awakeningTime: null, awakeningDuration: null,
   lightTherapyStart: null, lightTherapyEnd: null, lightTherapyIntensity: null,
   tags: [], note: null, experimentCondition: null,
   weeklyStress: null, weeklyActivity: null, weeklyInflammation: null, weeklyRating: null,
