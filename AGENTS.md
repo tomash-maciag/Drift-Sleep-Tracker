@@ -46,6 +46,7 @@ How the coding agent communicates, thinks, and makes decisions in this project.
 14. **Challenge your own work.** Before presenting a solution, pause: "Is there a simpler way? Am I over-engineering this?" If a fix feels hacky, step back and find the clean approach.
 15. **Root causes, not patches.** When something breaks, diagnose why — don't layer workarounds. A proper fix now saves three debugging sessions later.
 16. **Respect .gitignore.** When committing, only stage files shown by `git status`. Never `git add` a file that `git status` doesn't list. Never use `git add -f`.
+17. **Run strict build check before push.** Always run `npx tsc --noEmit --noUnusedLocals --noUnusedParameters` before `git push`. Fix all errors. No pushing code that fails CI.
 
 ---
 

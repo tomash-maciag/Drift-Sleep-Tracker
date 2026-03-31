@@ -94,9 +94,7 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
       const wakeNorm = normalizeMinutes(timeToMinutes(wakeTime), rangeStartMin)
       const newNorm = normalizeMinutes(newMin, rangeStartMin)
       if (newNorm >= wakeNorm) return
-      // Auto-calculate sleepOnset as bedtime + 15min
-      const onsetMin = (newMin + 15) % 1440
-      onChange({ bedtime: newTime, sleepOnset: minutesToTime(onsetMin), wakeTime, outOfBedTime })
+      onChange({ bedtime: newTime, sleepOnset: newTime, wakeTime, outOfBedTime })
     } else if (handleId === 'wake') {
       // Wake can't go before sleepOnset or after outOfBed
       const onsetNorm = normalizeMinutes(timeToMinutes(sleepOnset), rangeStartMin)
@@ -115,8 +113,7 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
 
   const handleSwipe = useCallback((startPct: number, endPct: number) => {
     const newBedtime = pctToTime(startPct)
-    const newBedMin = timeToMinutes(newBedtime)
-    const newOnset = minutesToTime((newBedMin + 15) % 1440)
+    const newOnset = newBedtime
     const newOutOfBed = pctToTime(endPct)
     // Wake = outOfBed - 15min
     const outMin = timeToMinutes(newOutOfBed)

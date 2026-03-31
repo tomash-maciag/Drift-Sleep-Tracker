@@ -29,7 +29,7 @@ export function LogForm() {
 
   // Compute defaults from sleep window
   const defaultBedtime = sleepWindowStart ?? '00:00'
-  const defaultOnset = minutesToTime((timeToMinutes(defaultBedtime) + 15) % 1440)
+  const defaultOnset = defaultBedtime
   const defaultWake = sleepWindowEnd ?? '06:00'
   const defaultOut = minutesToTime((timeToMinutes(defaultWake) + 15) % 1440)
 
@@ -47,7 +47,7 @@ export function LogForm() {
   useEffect(() => {
     if (!isLoading && existingLog === null && !defaultsApplied && sleepWindowStart && sleepWindowEnd) {
       setBedtime(sleepWindowStart)
-      setSleepOnset(minutesToTime((timeToMinutes(sleepWindowStart) + 15) % 1440))
+      setSleepOnset(sleepWindowStart)
       setWakeTime(sleepWindowEnd)
       setOutOfBedTime(minutesToTime((timeToMinutes(sleepWindowEnd) + 15) % 1440))
       setDefaultsApplied(true)

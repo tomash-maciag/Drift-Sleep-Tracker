@@ -9,7 +9,7 @@ interface SleepTimes {
 }
 
 export function computeSleepMetrics(times: SleepTimes): ComputedSleepMetrics {
-  const tst = sleepDurationMinutes(times.sleepOnset, times.wakeTime)
+  const tst = sleepDurationMinutes(times.bedtime, times.wakeTime)
   const tib = sleepDurationMinutes(times.bedtime, times.outOfBedTime)
   const sol = sleepDurationMinutes(times.bedtime, times.sleepOnset)
   const se = tib > 0 ? (tst / tib) * 100 : 0
