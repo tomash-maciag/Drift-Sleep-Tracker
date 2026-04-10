@@ -45,14 +45,16 @@ export function LogForm() {
   // Sync defaults when settings load (async) and no existing log
   const [defaultsApplied, setDefaultsApplied] = useState(false)
   useEffect(() => {
-    if (!isLoading && existingLog === null && !defaultsApplied && sleepWindowStart && sleepWindowEnd) {
+    if (!isLoading && existingLog === null && !defaultsApplied && sleepWindowStart && sleepWindowEnd && defaultLightStart && defaultLightEnd) {
       setBedtime(sleepWindowStart)
       setSleepOnset(sleepWindowStart)
       setWakeTime(sleepWindowEnd)
       setOutOfBedTime(minutesToTime((timeToMinutes(sleepWindowEnd) + 15) % 1440))
+      setLightStart(defaultLightStart)
+      setLightEnd(defaultLightEnd)
       setDefaultsApplied(true)
     }
-  }, [isLoading, existingLog, defaultsApplied, sleepWindowStart, sleepWindowEnd])
+  }, [isLoading, existingLog, defaultsApplied, sleepWindowStart, sleepWindowEnd, defaultLightStart, defaultLightEnd])
 
   // Core fields
   const [alarmWake, setAlarmWake] = useState(0) // 0=Spontaneous, 1=Alarm
@@ -105,13 +107,7 @@ export function LogForm() {
   const [lightEnd, setLightEnd] = useState('')
   const [lightIntensity] = useState('40cm')
 
-  // Apply defaults when no existing log and settings loaded
-  useEffect(() => {
-    if (!isLoading && existingLog === null && defaultLightStart && defaultLightEnd) {
-      setLightStart((prev) => prev || defaultLightStart)
-      setLightEnd((prev) => prev || defaultLightEnd)
-    }
-  }, [isLoading, existingLog, defaultLightStart, defaultLightEnd])
+  // Light therapy defaults are applied in the main defaultsApplied effect above
 
   // Weekly review
   const [weeklyStress, setWeeklyStress] = useState(5)
@@ -251,6 +247,7 @@ export function LogForm() {
           outOfBedTime={outOfBedTime}
           rangeStart={barRangeStart ?? '23:00'}
           rangeEnd={barRangeEnd ?? '09:00'}
+          awakeningDuration={hasAwakening === 1 ? awakeningDuration : null}
           onChange={handleSleepBarChange}
         />
 

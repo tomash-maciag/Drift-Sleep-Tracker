@@ -11,6 +11,7 @@ interface SleepBarProps {
   outOfBedTime: string // HH:MM
   rangeStart: string   // HH:MM from settings (default '22:00')
   rangeEnd: string     // HH:MM from settings (default '10:00')
+  awakeningDuration?: number | null
   onChange: (values: { bedtime: string; sleepOnset: string; wakeTime: string; outOfBedTime: string }) => void
 }
 
@@ -28,7 +29,7 @@ function computeRangeTotal(rangeStartMin: number, rangeEndMin: number): number {
   return total
 }
 
-export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeStart, rangeEnd, onChange }: SleepBarProps) {
+export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeStart, rangeEnd, awakeningDuration, onChange }: SleepBarProps) {
   const barRef = useRef<HTMLDivElement>(null)
 
   const rangeStartMin = timeToMinutes(rangeStart)
@@ -77,7 +78,7 @@ export function SleepBar({ bedtime, sleepOnset, wakeTime, outOfBedTime, rangeSta
     return { labels: labelsList, dividers: dividersList }
   }, [rangeStartMin, rangeTotalMin])
 
-  const metrics = computeSleepMetrics({ bedtime, sleepOnset, wakeTime, outOfBedTime })
+  const metrics = computeSleepMetrics({ bedtime, sleepOnset, wakeTime, outOfBedTime, awakeningDuration })
 
   // Convert percentage back to time string
   const pctToTime = useCallback((pct: number): string => {
