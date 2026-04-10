@@ -27,6 +27,10 @@ export function LogForm() {
   const sleepWindowStart = useSettingLive<string>('sleepWindowStart', '00:00')
   const sleepWindowEnd = useSettingLive<string>('sleepWindowEnd', '06:00')
 
+  // Light therapy defaults from settings
+  const defaultLightStart = useSettingLive<string>('lightTherapyDefaultStart', '20:15')
+  const defaultLightEnd = useSettingLive<string>('lightTherapyDefaultEnd', '21:15')
+
   // Compute defaults from sleep window
   const defaultBedtime = sleepWindowStart ?? '00:00'
   const defaultOnset = defaultBedtime
@@ -100,9 +104,6 @@ export function LogForm() {
   const [showExtended, setShowExtended] = useState(false)
   const [note, setNote] = useState('')
 
-  // Light therapy (defaults from settings)
-  const defaultLightStart = useSettingLive<string>('lightTherapyDefaultStart', '20:15')
-  const defaultLightEnd = useSettingLive<string>('lightTherapyDefaultEnd', '21:15')
   const [lightStart, setLightStart] = useState('')
   const [lightEnd, setLightEnd] = useState('')
   const [lightIntensity] = useState('40cm')
