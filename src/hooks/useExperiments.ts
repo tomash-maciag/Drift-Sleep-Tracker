@@ -42,7 +42,7 @@ function computeConditionStats(label: string, logs: SleepLog[]): ConditionStats 
     return { label, dayCount: 0, avgWakeTime: 0, avgTst: 0, avgQuality: 0, minWakeTime: 0, maxWakeTime: 0, minTst: 0, maxTst: 0, minQuality: 0, maxQuality: 0 }
   }
   const wakeTimes = logs.map((l) => timeToMinutes(l.wakeTime))
-  const tsts = logs.map((l) => computeSleepMetrics({ bedtime: l.bedtime, sleepOnset: l.sleepOnset, wakeTime: l.wakeTime, outOfBedTime: l.outOfBedTime }).tst)
+  const tsts = logs.map((l) => computeSleepMetrics({ bedtime: l.bedtime, sleepOnset: l.sleepOnset, wakeTime: l.wakeTime, outOfBedTime: l.outOfBedTime, awakeningDuration: l.awakeningDuration }).tst)
   const qualities = logs.map((l) => l.sleepQuality)
   return {
     label, dayCount: logs.length,

@@ -53,7 +53,7 @@ export async function computeKPI(referenceDate: string, days: number): Promise<K
 function computeAverages(logs: SleepLog[]) {
   let totalTst = 0, totalSe = 0, totalWakeMin = 0
   for (const log of logs) {
-    const metrics = computeSleepMetrics({ bedtime: log.bedtime, sleepOnset: log.sleepOnset, wakeTime: log.wakeTime, outOfBedTime: log.outOfBedTime })
+    const metrics = computeSleepMetrics({ bedtime: log.bedtime, sleepOnset: log.sleepOnset, wakeTime: log.wakeTime, outOfBedTime: log.outOfBedTime, awakeningDuration: log.awakeningDuration })
     totalTst += metrics.tst
     totalSe += metrics.se
     totalWakeMin += timeToMinutes(log.wakeTime)
